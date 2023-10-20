@@ -29,7 +29,7 @@ varlist <- varlist[5:length(varlist)]
 varlist
 ## there is only one variable in this climate grids repository 
 #var_i <- "Temp_max"
-#var_i <- "tmax"
+var_i <- "tmax"
 
 #### load ABS SA1 for TAS ####
 indir_sa1 <- "data_provided/ABS_Census_2016/abs_sa1_2016_data_provided"
@@ -39,7 +39,7 @@ sa1 <- st_read(file.path(indir_sa1, infile_sa1))
 
 #### load and extract for study period ####
 
-study_period <- list(mindate="2020-01-01", maxdate ="2020-01-31")
+study_period <- list(mindate="2022-01-01", maxdate ="2022-01-31")
 
 ## raster data for each var
 print(var_i)
@@ -95,12 +95,12 @@ dev.off()
 
 #### show a map of the 22nd ####
 
-sa1_tomap <- outdat_wide2[date == as.Date("2020-01-22")]
+sa1_tomap <- outdat_wide2[date == as.Date("2022-01-22")]
 sa1_map <- cbind(sa1, sa1_tomap)
 
-png("figures_and_tables/do_map_abs_sa1_tmax_tas_20200122.png", width = 700, height = 700)
+png("figures_and_tables/do_map_abs_sa1_tmax_tas_20220122.png", width = 700, height = 700)
 plot(sa1_map["tmax"])
-legend("bottomright", legend = "22 Jan 2016")
+legend("bottomright", legend = "22 Jan 2022")
 dev.off()
 
 
@@ -108,8 +108,8 @@ dev.off()
 
 var_i = "tmax"
 b <- raster::brick(infile, varname = var_i)
-b2 <- b[[which(getZ(b) >= as.Date("2020-01-22") & getZ(b) < as.Date("2020-01-23"))]]
-png("figures_and_tables/do_map_abs_sa1_tmax_pred_national_20200122.png", width = 700, height = 700)
+b2 <- b[[which(getZ(b) >= as.Date("2022-01-22") & getZ(b) < as.Date("2022-01-23"))]]
+png("figures_and_tables/do_map_abs_sa1_tmax_pred_national_20220122.png", width = 700, height = 700)
 plot(b2)
 dev.off()
 
@@ -118,7 +118,7 @@ nc_close(r_nc)
 
 ## store grid and shapefile for GIS display
 dir.create("data_derived")
-writeRaster(b2, "data_derived/tmax_20200122.tif")
-st_write(sa1_map, "data_derived/tmax_20200122_abs_sa1_tas.gpkg", driver = "gpkg")
+writeRaster(b2, "data_derived/tmax_20220122.tif")
+st_write(sa1_map, "data_derived/tmax_20220122_abs_sa1_tas.gpkg", driver = "gpkg")
 ## open these in QGIS and produce a map with a scale bar and legend
 
