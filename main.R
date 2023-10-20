@@ -17,8 +17,8 @@ library(sf)
 library(data.table)
 
 #### input ####
-infile <- "https://dapds00.nci.org.au/thredds/dodsC/zv2/agcd/v1/tmax/mean/r005/01day/agcd_v1_tmax_mean_r005_daily_2020.nc"
-
+infile <- "https://dapds00.nci.org.au/thredds/dodsC/zv2/agcd/v1-0-1/tmax/mean/r005/01day/agcd_v1-0-1_tmax_mean_r005_daily_2022.nc"
+#infile <- "https://dap.tern.org.au/thredds/dodsC/Historical_Extreme_Weather_Events_Australia/AWAP_Year/uncompressed/Un_AWAP_2020.nc"
 
 #### variables ####
 r_nc <- ncdf4::nc_open(infile)
@@ -28,7 +28,8 @@ varlist <- names(r_nc[['var']])
 varlist <- varlist[5:length(varlist)]
 varlist
 ## there is only one variable in this climate grids repository 
-var_i <- "tmax"
+#var_i <- "Temp_max"
+#var_i <- "tmax"
 
 #### load ABS SA1 for TAS ####
 indir_sa1 <- "data_provided/ABS_Census_2016/abs_sa1_2016_data_provided"
@@ -42,7 +43,7 @@ study_period <- list(mindate="2020-01-01", maxdate ="2020-01-31")
 
 ## raster data for each var
 print(var_i)
-b <- raster::brick(infile, varname = var_i)
+b <- raster::brick(infile)#, varname = var_i)
 ##b
 b2 <- b[[which(getZ(b) >= as.Date(study_period[["mindate"]]) & getZ(b) <= as.Date(study_period[["maxdate"]]))]]
 b_sa1 <- exact_extract(brick(b2), sa1, progress = FALSE) 
