@@ -17,8 +17,11 @@ popfile: "2016Census_G01_AUS_SA1.csv"
 by_spatial_unit: "gcc_code16"
 
 ## alternately if you have cloud-car-dat mounted you can use any other spatial boundary and related population data  
-## rootdir: "~/cloud-car-dat/Shared/"
-## indir_sa1: "Environment_General/ABS_data/ABS_Census_2016/abs_sa1_2016_data_provided"
-## infile_sa1: "SA1_2016_NSW.shp"
+rootdir_cloud_cardat: "~/cloud-car-dat"
+## you can avoid re-downloading the AGCD GRIDS if you use CARDAT 
+indir_agcd_grids: "CAR_staging_area/AWAP_AGCD_GRIDS/AGCD_GRIDS_1990_2022/data_provided"
+## and you can also use the other ABS data on CARDAT
+indir_sa1_cloud_cardat: "Environment_General/ABS_data/ABS_Census_2016/abs_sa1_2016_data_provided"
+infile_sa1_cloud_cardat: "SA1_2016_NSW.shp"
 
 dat_derived_dir: "data_derived"

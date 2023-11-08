@@ -57,6 +57,8 @@ tar_target(
     , 
     variables = config$var_i
     ,
+    use_cloud_cardat = T
+    ,
     tidy_up = T
     )
 )
