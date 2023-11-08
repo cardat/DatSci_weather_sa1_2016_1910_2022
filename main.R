@@ -10,14 +10,14 @@
 #' @param study_period choose the dates to use for subset
 
 #### functions ####
-library(raster)
+#library(raster)
 library(terra)
 library(ncdf4)
 library(sf)
 library(data.table)
 
 #### input ####
-infile <- "https://dapds00.nci.org.au/thredds/dodsC/zv2/agcd/v1-0-1/tmax/mean/r005/01day/agcd_v1-0-1_tmax_mean_r005_daily_2020.nc"
+infile <- "https://dapds00.nci.org.au/thredds/dodsC/zv2/agcd/v1-0-1/tmax/mean/r005/01day/agcd_v1-0-1_tmax_mean_r005_daily_2022.nc"
 
 #### variables ####
 r_nc <- ncdf4::nc_open(infile)
@@ -31,13 +31,13 @@ varlist
 var_i <- "tmax"
 
 
-#### load ABS SA1 for TAS ####
+#### load_ABS_SA1 ####
 indir_sa1 <- "data_provided/ABS_Census_2016/abs_sa1_2016_data_provided"
 ## dir(indir_sa1)
 infile_sa1 <- "SA1_2016_TAS.shp"
 sa1 <- st_read(file.path(indir_sa1, infile_sa1))
 
-#### load and extract for study period ####
+#### load_and_extract for study period ####
 sa1_out <- list()
 for(yy in 2001:2020){
   ## yy = 2001
@@ -86,7 +86,7 @@ setDT(sa1_df)
 outdat_wide2 <- merge(sa1_df[,.(SA1_MAIN16, SA1_7DIG16 , ID)], outdat_wide, by = "ID")
 unique(outdat_wide2$SA1_7DIG16 )
 
-#### show a time series plot for a single SA1 in launceston ####
+#### show_a_time_series_plot for a single SA1 in launceston ####
 
 sa1_todo <- 6103815
 sa1_toplot <- outdat_wide2[SA1_7DIG16 == sa1_todo]
@@ -109,7 +109,7 @@ legend("bottomright", legend = "2 Jan 2001")
 dev.off()
 
 
-#### show the whole map ####
+#### show_the_whole_map ####
 
 var_i = "tmax"
 b <- raster::brick(gsub("agcd_v1-0-1_tmax_mean_r005_daily_2020.nc", 
@@ -123,7 +123,7 @@ dev.off()
 ## close connection to climate grids
 nc_close(r_nc)
 
-## store grid and shapefile for GIS display
+## store_output grid and shapefile for GIS display
 dir.create("data_derived")
 writeRaster(b2, "data_derived/tmax_20010102.tif")
 st_write(sa1_map, "data_derived/tmax_20010102_abs_sa1_tas.gpkg", driver = "gpkg")
