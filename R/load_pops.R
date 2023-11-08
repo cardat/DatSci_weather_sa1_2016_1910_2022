@@ -2,7 +2,6 @@
 #'
 #' @param indir The directory where the input file is located (check the config.yaml)
 #' @param infile The name of the input file (check infile definition in the target dat_mrg_shp_pop)
-#' @param name The name of the resulting data frame (sa1_pop).
 #'
 #' @return
 #' @export
@@ -16,8 +15,6 @@ load_pops <- function(
                       config$popdir)
     ,
     infile = config$popfile
-    ,
-    name = "dat_sa1_pop"
 ){
   csv_file <- file.path(
     config$rootdir,

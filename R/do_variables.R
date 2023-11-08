@@ -3,7 +3,9 @@ do_variables <- function(
 ){
   #### variables ####
   r_nc <- ncdf4::nc_open(infile)
+  sink("metadata_agcd.txt")
   r_nc
+  sink()
   varlist <- names(r_nc[['var']])
   varlist
   # exclude lon, lat, time and crs
