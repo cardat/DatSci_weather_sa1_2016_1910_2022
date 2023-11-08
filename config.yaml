@@ -15,6 +15,8 @@ popdir: "ABS_GCP_2016/data_provided/SA1/AUST"
 popfile: "2016Census_G01_AUS_SA1.csv"
 ## specify the level to do pop weighted aggregation to
 by_spatial_unit: "gcc_code16"
+## if you have downloaded a observaitons file to compare to specify that here
+infile_qc_against_obs: "data_provided/BoM_oberservations/data_provided/IDCJAC0010_009225_1800/IDCJAC0010_009225_1800_Data.csv"
 
 ## alternately if you have cloud-car-dat mounted you can use any other spatial boundary and related population data  
 rootdir_cloud_cardat: "~/cloud-car-dat"

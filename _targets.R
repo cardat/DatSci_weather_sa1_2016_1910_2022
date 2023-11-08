@@ -95,7 +95,9 @@ tar_target(
 tar_target(
   qc_perth,
   do_qc_against_obs(
-    infile = "data_provided/BoM_oberservations/data_provided/IDCJAC0010_009225_1800/IDCJAC0010_009225_1800_Data.csv"
+    dat_pop_weighted
+    ,
+    infile = config$infile_qc_against_obs
   )
 )
 ,
