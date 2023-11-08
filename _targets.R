@@ -100,7 +100,11 @@ tar_target(
 # ####  show_the_whole_map ####
 # tar_target(
 #   show_the_whole_map,
-#   do_show_the_whole_map(load_and_extract)
+#   do_show_the_whole_map(
+#     load_and_extract
+#     ,
+#     sa1 = load_ABS_SA1
+#     )
 # )
 # ,
 # ####  store_output ####

@@ -25,7 +25,9 @@ load_pops <- function(
     csv_file,
     colClasses = list(
       character = c("SA1_7DIGITCODE_2016",
-                    "Tot_P_P")))
+                    "Tot_P_P")
+    )
+  )
   sa1_pop <- sa1_pop[, .(sa1_7dig16 = SA1_7DIGITCODE_2016, pop = Tot_P_P )]
   return(sa1_pop)
 }
