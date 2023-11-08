@@ -25,3 +25,4 @@ indir_sa1_cloud_cardat: "Environment_General/ABS_data/ABS_Census_2016/abs_sa1_20
 infile_sa1_cloud_cardat: "SA1_2016_NSW.shp"
 
 dat_derived_dir: "data_derived"
+outfile: "perth_abs_gcc16_weather_1990_2022_v20231109.csv"
