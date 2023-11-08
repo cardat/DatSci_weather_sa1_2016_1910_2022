@@ -90,7 +90,7 @@ tar_target(
   show_a_time_series_plot,
   do_show_a_time_series_plot(dat_pop_weighted)
 )
-# ,
+#,
 # #### qc_perth ####
 # tar_target(
 #   qc_perth,
@@ -98,7 +98,7 @@ tar_target(
 #     infile = "data_provided/BoM_oberservations/data_provided/IDCJAC0010_009225_1800/IDCJAC0010_009225_1800_Data.csv"
 #   )
 # )
-# ,
+#,
 # ####  show_the_whole_map ####
 # tar_target(
 #   show_the_whole_map,
@@ -108,10 +108,14 @@ tar_target(
 #     sa1 = load_ABS_SA1
 #     )
 # )
-# ,
-# ####  store_output ####
-# tar_target(
-#   store_output,
-#   do_store_output(load_and_extract)
-# )
+ ,
+ ####  store_output ####
+ tar_target(
+   store_output,
+   do_store_output(
+     dat_pop_weighted
+     ,
+     outfile = file.path(config$dat_derived_dir, "perth_abs_gcc16_weather_1990_2022_v20231109.csv")
+    )
+ )
 )
