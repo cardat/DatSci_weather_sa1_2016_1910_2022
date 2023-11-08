@@ -1,3 +1,4 @@
+## only run for perth WA
 do_qc_against_obs <- function(
     infile = "data_provided/BoM_oberservations/data_provided/IDCJAC0010_009225_1800/IDCJAC0010_009225_1800_Data.csv"
 ){

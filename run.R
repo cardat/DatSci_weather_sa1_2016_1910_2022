@@ -7,7 +7,7 @@ tar_visnetwork(targets_only = T)
 # visIgraphLayout(tar_visnetwork(targets_only = T), layout = 'layout.kamada.kawai', physics = T)
 # Load config.yaml
 config <- yaml::read_yaml("config.yaml")
-# tar_make()
+tar_make()
 # 
 # # useful
 # tar_invalidate()
