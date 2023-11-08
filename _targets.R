@@ -37,7 +37,7 @@ tar_target(
     , 
     infile_sa1=config$infile_sa1
     ,
-    subset_to_region = "GCC_CODE16 == '5GPER'"
+    subset_to_region = config$subset_to_region
     )
 )
 ,
@@ -51,13 +51,15 @@ tar_target(
     , 
     var_i = config$var_i
     ,
-    yy_min = 1990
+    yy_min = config$yy_min
     , 
-    yy_max = 2022
+    yy_max = config$yy_max
     , 
     variables = config$var_i
     ,
-    tidy_up = F
+    use_cloud_cardat = T
+    ,
+    tidy_up = T
     )
 )
 ,
@@ -68,8 +70,6 @@ tar_target(
     indir = file.path(config$rootdir,
                       config$popdir),
     infile = config$popfile
-    ,
-    name = "dat_sa1_pop"
   )
 )
 ,
@@ -81,7 +81,7 @@ tar_target(
     ,
     infile_exposure = load_and_extract
     ,
-    by_spatial_unit = "gcc_code16"
+    by_spatial_unit = config$by_spatial_unit
   )
 )
 ,
@@ -90,16 +90,34 @@ tar_target(
   show_a_time_series_plot,
   do_show_a_time_series_plot(dat_pop_weighted)
 )
-# ,
-# ####  show_the_whole_map ####
-# tar_target(
-#   show_the_whole_map,
-#   do_show_the_whole_map(load_and_extract)
-# )
-# ,
-# ####  store_output ####
-# tar_target(
-#   store_output,
-#   do_store_output(load_and_extract)
-# )
+,
+#### qc_perth ####
+tar_target(
+  qc_perth,
+  do_qc_against_obs(
+    dat_pop_weighted
+    ,
+    infile = config$infile_qc_against_obs
+  )
+)
+,
+####  show_the_whole_map ####
+tar_target(
+  show_the_whole_map,
+  do_show_the_whole_map(
+    load_and_extract
+    ,
+    sa1 = load_ABS_SA1
+    )
+)
+,
+####  store_output ####
+tar_target(
+  store_output,
+  do_store_output(
+    dat_pop_weighted
+    ,
+    outfile = file.path(config$dat_derived_dir, config$outfile)
+   )
+)
 )

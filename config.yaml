@@ -2,17 +2,29 @@
 ## set the data directories and data files ##
 infile: "https://dapds00.nci.org.au/thredds/dodsC/zv2/agcd/v1-0-1/tmax/mean/r005/01day/agcd_v1-0-1_tmax_mean_r005_daily_2022.nc"
 var_i: "tmax"
+yy_min: 2021
+yy_max: 2022
 ## if you are using the demo data
 rootdir: "data_provided"
 indir_sa1: "ABS_Census_2016/abs_sa1_2016_data_provided"
-## dir(indir_sa1)
 infile_sa1: "SA1_2016_WA.shp"
+## if you want to do a subset of SA1s in a state
+subset_to_region: "GCC_CODE16 == '5GPER'"
+## the population data is provided in the demo
 popdir: "ABS_GCP_2016/data_provided/SA1/AUST"
 popfile: "2016Census_G01_AUS_SA1.csv"
-  
-## alternately if you have cloud-car-dat mounted  
-## rootdir: "~/cloud-car-dat/Shared/"
-## indir_sa1: "Environment_General/ABS_data/ABS_Census_2016/abs_sa1_2016_data_provided"
-## infile_sa1: "SA1_2016_NSW.shp"
+## specify the level to do pop weighted aggregation to
+by_spatial_unit: "gcc_code16"
+## if you have downloaded a observaitons file to compare to specify that here
+infile_qc_against_obs: "data_provided/BoM_oberservations/data_provided/IDCJAC0010_009225_1800/IDCJAC0010_009225_1800_Data.csv"
+
+## alternately if you have cloud-car-dat mounted you can use any other spatial boundary and related population data  
+rootdir_cloud_cardat: "~/cloud-car-dat"
+## you can avoid re-downloading the AGCD GRIDS if you use CARDAT 
+indir_agcd_grids: "CAR_staging_area/AWAP_AGCD_GRIDS/AGCD_GRIDS_1990_2022/data_provided"
+## and you can also use the other ABS data on CARDAT
+indir_sa1_cloud_cardat: "Environment_General/ABS_data/ABS_Census_2016/abs_sa1_2016_data_provided"
+infile_sa1_cloud_cardat: "SA1_2016_NSW.shp"
 
 dat_derived_dir: "data_derived"
+outfile: "perth_abs_gcc16_weather_1990_2022_v20231109.csv"

@@ -12,11 +12,11 @@ do_load_and_extract <- function(
   , 
   variables = config$var_i
   ,
+  use_cloud_cardat = T
+  ,
   tidy_up = F
 ){
   #### load_and_extract for study period ####
-  dir_store <- "data_provided/agcd_v1-0-1"
-  if(!dir.exists(dir_store)) dir.create(dir_store)
   
   ## raster data for each var
   sa1_out2_by_var <- list()
@@ -29,21 +29,43 @@ do_load_and_extract <- function(
     ## yy = 2021
     print(yy)
     
-    # infile <- paste0("https://dapds00.nci.org.au/thredds/dodsC/zv2/agcd/v1-0-1/tmax/mean/r005/01day/agcd_v1-0-1_tmax_mean_r005_daily_",yy_min,".nc") #  use this for a THREDDS service (but slower)
-    # this version downloads the file quicker
-    if(var_i != "precip"){
-    infile <- paste0("https://dapds00.nci.org.au/thredds/fileServer/zv2/agcd/v1-0-1/",var_i,"/mean/r005/01day/agcd_v1-0-1_",var_i,"_mean_r005_daily_",yy,".nc")
+    if(use_cloud_cardat == FALSE){
+      dir_store <- "data_provided/agcd_v1-0-1"
+      if(!dir.exists(dir_store)) dir.create(dir_store)
+      
+      # infile <- paste0("https://dapds00.nci.org.au/thredds/dodsC/zv2/agcd/v1-0-1/tmax/mean/r005/01day/agcd_v1-0-1_tmax_mean_r005_daily_",yy_min,".nc") #  use this for a THREDDS service (but slower)
+      # this version downloads the file quicker
+      if(var_i != "precip"){
+        infile <- paste0("https://dapds00.nci.org.au/thredds/fileServer/zv2/agcd/v1-0-1/",var_i,"/mean/r005/01day/agcd_v1-0-1_",var_i,"_mean_r005_daily_",yy,".nc")
+      } else {
+        infile <- paste0("https://dapds00.nci.org.au/thredds/fileServer/zv2/agcd/v1-0-1/precip/total/r005/01day/agcd_v1-0-1_precip_total_r005_daily_",yy,".nc")
+      }
+      infile2 <- file.path(dir_store,basename(infile))
+      
+      if(!file.exists(infile2)){
+        system(paste0("wget ",infile," ", basename(infile)))
+        file.rename(basename(infile), infile2)
+      }
+      
+      b2 <- raster::brick(infile2)
+      if(tidy_up == TRUE){
+        file.remove(infile2)
+      }
     } else {
-    infile <- paste0("https://dapds00.nci.org.au/thredds/fileServer/zv2/agcd/v1-0-1/precip/total/r005/01day/agcd_v1-0-1_precip_total_r005_daily_",yy,".nc")
+      ## use cloud-car-dat
+      if(var_i != "precip"){
+        infile <- file.path(config$rootdir_cloud_cardat,
+                            config$indir_agcd_grids,
+                            paste0("agcd_v1-0-1_",var_i,"_mean_r005_daily_",yy,".nc")
+        )
+      } else {
+        infile <- file.path(config$rootdir_cloud_cardat,
+                            config$indir_agcd_grids,
+                            paste0("agcd_v1-0-1_precip_total_r005_daily_",yy,".nc")
+        )
+      }
+      b2 <- raster::brick(infile)
     }
-    infile2 <- file.path(dir_store,basename(infile))
-    
-    if(!file.exists(infile2)){
-      system(paste0("wget ",infile," ", basename(infile)))
-      file.rename(basename(infile), infile2)
-    }
-    
-    b2 <- raster::brick(infile2)
     sa1 <- st_transform(sa1, crs(b2))  
     # b2
     # plot(b2)
@@ -53,9 +75,7 @@ do_load_and_extract <- function(
     # b2 <- brick(b2) # this is only needed if you use are not using local ncdf files 
     
     b_sa1 <- exactextractr::exact_extract(b2, sa1, fun = "mean", progress = FALSE)
-    if(tidy_up == TRUE){
-      file.remove(infile2)
-    }
+
     out <- cbind(st_drop_geometry(sa1[,1]), b_sa1)
     setDT(out)
     
