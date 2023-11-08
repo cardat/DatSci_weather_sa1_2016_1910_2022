@@ -51,7 +51,7 @@ tar_target(
     , 
     var_i = config$var_i
     ,
-    yy_min = 2000
+    yy_min = 1990
     , 
     yy_max = 2022
     , 
