@@ -20,7 +20,7 @@ do_load_and_extract <- function(
   
   ## raster data for each var
   sa1_out2_by_var <- list()
-  for(var_i in c("tmax")){#}, "tmin", "vapourpres_h09", "vapourpres_h15", "precip")){
+  for(var_i in c("tmax", "tmin", "vapourpres_h09", "vapourpres_h15", "precip")){
     # var_i = "tmin"
     print(var_i)
   
