@@ -5,7 +5,8 @@ tar_visnetwork(targets_only = T)
 # for very dense pipelines use this layout
 # library(visNetwork)
 # visIgraphLayout(tar_visnetwork(targets_only = T), layout = 'layout.kamada.kawai', physics = T)
-# If using the tool then you only have a skeleton.  You need to write code then:
+# Load config.yaml
+config <- yaml::read_yaml("config.yaml")
 tar_make()
 # 
 # # useful
